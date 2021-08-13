@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import SeasonDisplay from './SeasonDisplay'; 
+import Spinner from './Spinner';
 
 // const App = () => {
 //     window.navigator.geolocation.getCurrentPosition(
@@ -47,16 +48,24 @@ class App extends React.Component {
         );    
     }
 
-    // React says we have to define render !!
-    render() {
-        // Conditional Rendering
+    renderContent() {
+        // Handle Conditional Rendering using Helper Function
         if(this.state.errorMessage && !this.state.lat) {
             return <div> Error: {this.state.errorMessage} </div>;
         }
         if(!this.state.errorMessage && this.state.lat) {
             return <SeasonDisplay lat = {this.state.lat} />
         }
-        return <div> Loading ! </div>
+        return <Spinner message="Please Accept Location Request" />
+    }
+
+    // React says we have to define render !!
+    render() {
+        return (
+            <div className="border red">
+                {this.renderContent()}
+            </div>
+        );
     }
 };
 
